@@ -1,3 +1,18 @@
+output "ecs_task_definition_arn" {
+  value       = "${aws_ecs_task_definition.default.arn}"
+  description = "Full ARN of the Task Definition (including both family and revision)."
+}
+
+output "ecs_task_definition_family" {
+  value       = "${aws_ecs_task_definition.default.family}"
+  description = "The family of the Task Definition."
+}
+
+output "ecs_task_definition_revision" {
+  value       = "${aws_ecs_task_definition.default.revision}"
+  description = "The revision of the task in a particular family."
+}
+
 output "ecs_task_execution_role_arn" {
   value       = "${aws_iam_role.default.arn}"
   description = "The Amazon Resource Name (ARN) specifying the ecs task execution."
