@@ -3,6 +3,11 @@ variable "name" {
   description = "The name of ecs service."
 }
 
+variable "container_name" {
+  type        = "string"
+  description = "The name of the container to associate with the load balancer (as it appears in a container definition)."
+}
+
 variable "cluster" {
   type        = "string"
   description = "ARN of an ECS cluster."
@@ -11,6 +16,11 @@ variable "cluster" {
 variable "subnets" {
   type        = "list"
   description = "The subnets associated with the task or service."
+}
+
+variable "target_group_arn" {
+  type        = "string"
+  description = "The ARN of the Load Balancer target group to associate with the service."
 }
 
 variable "vpc_id" {
