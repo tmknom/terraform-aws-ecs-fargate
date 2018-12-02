@@ -4,6 +4,69 @@
 #
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_GetStarted.html
 
+# ECS Service
+#
+# The Fargate launch type allows you to run your containerized applications
+# without the need to provision and manage the backend infrastructure.
+#
+# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service_definition_parameters.html
+
+# https://www.terraform.io/docs/providers/aws/r/ecs_service.html
+resource "aws_ecs_service" "default" {
+  # The name of your service. Up to 255 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.
+  # Service names must be unique within a cluster, but you can have similarly named services
+  # in multiple clusters within a region or across multiple regions.
+  name = "${var.name}"
+
+  # The family and revision (family:revision) or full ARN of the task definition to run in your service.
+  # If a revision is not specified, the latest ACTIVE revision is used.
+  task_definition = "${aws_ecs_task_definition.default.arn}"
+
+  # The short name or full Amazon Resource Name (ARN) of the cluster on which to run your service.
+  # If you do not specify a cluster, the default cluster is assumed.
+  cluster = "${var.cluster}"
+
+  # The number of instantiations of the specified task definition to place and keep running on your cluster.
+  desired_count = "${var.desired_count}"
+
+  # The maximumPercent parameter represents an upper limit on the number of your service's tasks
+  # that are allowed in the RUNNING or PENDING state during a deployment,
+  # as a percentage of the desiredCount (rounded down to the nearest integer).
+  deployment_maximum_percent = "${var.deployment_maximum_percent}"
+
+  # The minimumHealthyPercent represents a lower limit on the number of your service's tasks
+  # that must remain in the RUNNING state during a deployment,
+  # as a percentage of the desiredCount (rounded up to the nearest integer).
+  deployment_minimum_healthy_percent = "${var.deployment_minimum_healthy_percent}"
+
+  deployment_controller {
+    # The deployment controller type to use. Valid values: CODE_DEPLOY, ECS.
+    type = "${var.deployment_controller_type}"
+  }
+
+  # The network configuration for the service. This parameter is required for task definitions
+  # that use the awsvpc network mode to receive their own Elastic Network Interface.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html
+  network_configuration {
+    subnets         = ["${var.subnets}"]
+    security_groups = ["${aws_security_group.default.id}"]
+
+    # Whether the task's elastic network interface receives a public IP address.
+    assign_public_ip = "${var.assign_public_ip}"
+  }
+
+  # The launch type on which to run your service.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html
+  launch_type = "FARGATE"
+
+  # Note that Fargate tasks do support only the REPLICA scheduling strategy.
+  #
+  # The replica scheduling strategy places and maintains the desired number of tasks across your cluster.
+  # By default, the service scheduler spreads tasks across Availability Zones.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html#service_scheduler_replica
+  scheduling_strategy = "REPLICA"
+}
+
 # Security Group for ECS Service
 #
 # NOTE: At this time you cannot use a Security Group with in-line rules
