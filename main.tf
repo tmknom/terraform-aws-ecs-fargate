@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "default" {
   network_mode = "awsvpc"
 
   # A mapping of tags to assign to the resource.
-  tags = "${var.tags}"
+  tags = "${merge(map("Name", var.name), var.tags)}"
 }
 
 # ECS Task Execution IAM Role
@@ -59,7 +59,7 @@ resource "aws_iam_role" "default" {
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy.json}"
   path               = "${var.ecs_task_execution_path}"
   description        = "${var.ecs_task_execution_description}"
-  tags               = "${var.tags}"
+  tags               = "${merge(map("Name", var.name), var.tags)}"
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
