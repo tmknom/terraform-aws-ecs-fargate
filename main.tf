@@ -55,6 +55,25 @@ resource "aws_ecs_service" "default" {
     assign_public_ip = "${var.assign_public_ip}"
   }
 
+  # Note: As a result of an AWS limitation, a single load_balancer can be attached to the ECS service at most.
+  #
+  # When you create any target groups for these services, you must choose ip as the target type, not instance.
+  # This is because tasks that use the awsvpc network mode are associated with an elastic network interface, not an EC2 instance.
+  #
+  # After you create a service, the load balancer name or target group ARN, container name,
+  # and container port specified in the service definition are immutable.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html#load-balancing-concepts
+  load_balancer {
+    # The ARN of the Load Balancer target group to associate with the service.
+    target_group_arn = "${var.target_group_arn}"
+
+    # The name of the container to associate with the load balancer (as it appears in a container definition).
+    container_name = "${var.container_name}"
+
+    # The port on the container to associate with the load balancer.
+    container_port = "${var.container_port}"
+  }
+
   # The launch type on which to run your service.
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html
   launch_type = "FARGATE"
