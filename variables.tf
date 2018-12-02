@@ -8,6 +8,11 @@ variable "container_name" {
   description = "The name of the container to associate with the load balancer (as it appears in a container definition)."
 }
 
+variable "container_port" {
+  type        = "string"
+  description = "The port on the container to associate with the load balancer."
+}
+
 variable "cluster" {
   type        = "string"
   description = "ARN of an ECS cluster."
@@ -66,12 +71,6 @@ variable "assign_public_ip" {
   default     = false
   type        = "string"
   description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false."
-}
-
-variable "container_port" {
-  default     = 80
-  type        = "string"
-  description = "The container port."
 }
 
 variable "ingress_cidr_blocks" {
