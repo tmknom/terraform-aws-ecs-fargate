@@ -9,7 +9,6 @@ variable "container_name" {
 }
 
 variable "container_port" {
-  default     = 80
   type        = "string"
   description = "The port on the container to associate with the load balancer."
 }
