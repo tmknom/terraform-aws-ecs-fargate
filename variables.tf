@@ -3,6 +3,21 @@ variable "name" {
   description = "The name of ecs service."
 }
 
+variable "cluster" {
+  type        = "string"
+  description = "ARN of an ECS cluster."
+}
+
+variable "subnets" {
+  type        = "list"
+  description = "The subnets associated with the task or service."
+}
+
+variable "vpc_id" {
+  type        = "string"
+  description = "VPC Id to associate with ECS Service."
+}
+
 variable "container_definitions" {
   type        = "string"
   description = "A list of valid container definitions provided as a single valid JSON document. "
@@ -11,6 +26,48 @@ variable "container_definitions" {
 variable "ecs_task_execution_policy" {
   type        = "string"
   description = "The ecs task execution policy document. This is a JSON formatted string."
+}
+
+variable "desired_count" {
+  default     = 0
+  type        = "string"
+  description = "The number of instances of the task definition to place and keep running."
+}
+
+variable "deployment_maximum_percent" {
+  default     = 200
+  type        = "string"
+  description = "The upper limit (as a percentage of the service's desiredCount) of the number of running tasks that can be running in a service during a deployment."
+}
+
+variable "deployment_minimum_healthy_percent" {
+  default     = 100
+  type        = "string"
+  description = "The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment."
+}
+
+variable "deployment_controller_type" {
+  default     = "ECS"
+  type        = "string"
+  description = "Type of deployment controller. Valid values: CODE_DEPLOY, ECS."
+}
+
+variable "assign_public_ip" {
+  default     = false
+  type        = "string"
+  description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false."
+}
+
+variable "container_port" {
+  default     = 80
+  type        = "string"
+  description = "The container port."
+}
+
+variable "ingress_cidr_blocks" {
+  default     = ["0.0.0.0/0"]
+  type        = "list"
+  description = "List of Ingress CIDR blocks."
 }
 
 variable "cpu" {
