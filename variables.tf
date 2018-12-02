@@ -3,6 +3,11 @@ variable "name" {
   description = "The name of ecs service."
 }
 
+variable "vpc_id" {
+  type        = "string"
+  description = "VPC Id to associate with ECS Service."
+}
+
 variable "container_definitions" {
   type        = "string"
   description = "A list of valid container definitions provided as a single valid JSON document. "
@@ -11,6 +16,18 @@ variable "container_definitions" {
 variable "ecs_task_execution_policy" {
   type        = "string"
   description = "The ecs task execution policy document. This is a JSON formatted string."
+}
+
+variable "container_port" {
+  default     = 80
+  type        = "string"
+  description = "The container port."
+}
+
+variable "ingress_cidr_blocks" {
+  default     = ["0.0.0.0/0"]
+  type        = "list"
+  description = "List of Ingress CIDR blocks."
 }
 
 variable "cpu" {

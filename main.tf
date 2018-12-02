@@ -4,6 +4,42 @@
 #
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_GetStarted.html
 
+# Security Group for ECS Service
+#
+# NOTE: At this time you cannot use a Security Group with in-line rules
+#       in conjunction with any Security Group Rule resources.
+#       Doing so will cause a conflict of rule settings and will overwrite rules.
+#
+# https://www.terraform.io/docs/providers/aws/r/security_group.html
+resource "aws_security_group" "default" {
+  name   = "${local.security_group_name}"
+  vpc_id = "${var.vpc_id}"
+  tags   = "${merge(map("Name", local.security_group_name), var.tags)}"
+}
+
+locals {
+  security_group_name = "${var.name}-ecs-fargate"
+}
+
+# https://www.terraform.io/docs/providers/aws/r/security_group_rule.html
+resource "aws_security_group_rule" "ingress" {
+  type              = "ingress"
+  from_port         = "${var.container_port}"
+  to_port           = "${var.container_port}"
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.ingress_cidr_blocks}"]
+  security_group_id = "${aws_security_group.default.id}"
+}
+
+resource "aws_security_group_rule" "egress" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.default.id}"
+}
+
 # ECS Task Definitions
 #
 # The following parameters are not valid in Fargate:
