@@ -11,7 +11,7 @@ variable "container_name" {
 variable "container_port" {
   default     = 80
   type        = "string"
-  description = "The container port."
+  description = "The port on the container to associate with the load balancer."
 }
 
 variable "cluster" {
