@@ -55,11 +55,11 @@ resource "aws_ecs_task_definition" "default" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_role.html
 resource "aws_iam_role" "default" {
-  name               = "${var.name}-ecs-task-execution"
+  name               = "${local.iam_name}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy.json}"
   path               = "${var.ecs_task_execution_path}"
   description        = "${var.ecs_task_execution_description}"
-  tags               = "${merge(map("Name", var.name), var.tags)}"
+  tags               = "${merge(map("Name", local.iam_name), var.tags)}"
 }
 
 data "aws_iam_policy_document" "assume_role_policy" {
@@ -75,7 +75,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_policy.html
 resource "aws_iam_policy" "default" {
-  name        = "${var.name}-ecs-task-execution"
+  name        = "${local.iam_name}"
   policy      = "${var.ecs_task_execution_policy}"
   path        = "${var.ecs_task_execution_path}"
   description = "${var.ecs_task_execution_description}"
@@ -85,4 +85,8 @@ resource "aws_iam_policy" "default" {
 resource "aws_iam_role_policy_attachment" "default" {
   role       = "${aws_iam_role.default.name}"
   policy_arn = "${aws_iam_policy.default.arn}"
+}
+
+locals {
+  iam_name = "${var.name}-ecs-task-execution"
 }
