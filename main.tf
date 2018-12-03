@@ -74,6 +74,12 @@ resource "aws_ecs_service" "default" {
     container_port = "${var.container_port}"
   }
 
+  # If your service's tasks take a while to start and respond to Elastic Load Balancing health checks,
+  # you can specify a health check grace period of up to 7,200 seconds. This grace period can prevent
+  # the service scheduler from marking tasks as unhealthy and stopping them before they have time to come up.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-create-loadbalancer-rolling.html
+  health_check_grace_period_seconds = "${var.health_check_grace_period_seconds}"
+
   # The launch type on which to run your service.
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html
   launch_type = "FARGATE"
