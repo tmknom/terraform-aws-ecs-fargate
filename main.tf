@@ -90,6 +90,12 @@ resource "aws_ecs_service" "default" {
   # By default, the service scheduler spreads tasks across Availability Zones.
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html#service_scheduler_replica
   scheduling_strategy = "REPLICA"
+
+  lifecycle {
+    # Ignore any changes to that count caused externally (e.g. Application Autoscaling).
+    # https://www.terraform.io/docs/providers/aws/r/ecs_service.html#ignoring-changes-to-desired-count
+    ignore_changes = ["desired_count"]
+  }
 }
 
 # Security Group for ECS Service
