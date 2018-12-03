@@ -73,6 +73,12 @@ variable "assign_public_ip" {
   description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false."
 }
 
+variable "health_check_grace_period_seconds" {
+  default     = 0
+  type        = "string"
+  description = "Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200."
+}
+
 variable "ingress_cidr_blocks" {
   default     = ["0.0.0.0/0"]
   type        = "list"
