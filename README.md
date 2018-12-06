@@ -8,11 +8,55 @@ Terraform module template following [Standard Module Structure](https://www.terr
 
 ## Usage
 
-Named `terraform-<PROVIDER>-<NAME>`. Module repositories must use this three-part name format.
+### Minimal
 
-```sh
-curl -fsSL https://raw.githubusercontent.com/tmknom/terraform-aws-ecs-fargate/master/install | sh -s terraform-aws-sample
-cd terraform-aws-sample && make install
+```hcl
+module "ecs_fargate" {
+  source                    = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.0.0"
+  name                      = "example"
+  container_name            = "nginx"
+  container_port            = "80"
+  cluster                   = "${var.ecs_cluster_arn}"
+  subnets                   = ["${var.subnets}"]
+  target_group_arn          = "${var.target_group_arn}"
+  vpc_id                    = "${var.vpc_id}"
+  container_definitions     = "${var.container_definitions}"
+  ecs_task_execution_policy = "${var.ecs_task_execution_policy}"
+}
+```
+
+### Complete
+
+```hcl
+module "ecs_fargate" {
+  source                    = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.0.0"
+  name                      = "example"
+  container_name            = "nginx"
+  container_port            = "80"
+  cluster                   = "${var.ecs_cluster_arn}"
+  subnets                   = ["${var.subnets}"]
+  target_group_arn          = "${var.target_group_arn}"
+  vpc_id                    = "${var.vpc_id}"
+  container_definitions     = "${var.container_definitions}"
+  ecs_task_execution_policy = "${var.ecs_task_execution_policy}"
+
+  desired_count                      = 2
+  deployment_maximum_percent         = 200
+  deployment_minimum_healthy_percent = 100
+  deployment_controller_type         = "ECS"
+  assign_public_ip                   = true
+  health_check_grace_period_seconds  = 10
+  ingress_cidr_blocks                = ["0.0.0.0/0"]
+  cpu                                = 256
+  memory                             = 512
+  requires_compatibilities           = ["FARGATE"]
+  ecs_task_execution_path            = "/service_role/"
+  ecs_task_execution_description     = "example description"
+
+  tags = {
+    Environment = "prod"
+  }
+}
 ```
 
 ## Examples
