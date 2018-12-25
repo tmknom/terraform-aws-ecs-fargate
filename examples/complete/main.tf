@@ -20,8 +20,8 @@ module "ecs_fargate" {
   cpu                                = 256
   memory                             = 512
   requires_compatibilities           = ["FARGATE"]
-  ecs_task_execution_path            = "/service_role/"
-  ecs_task_execution_description     = "example description"
+  iam_path                           = "/service_role/"
+  iam_description                    = "example description"
 
   tags = {
     Environment = "prod"
