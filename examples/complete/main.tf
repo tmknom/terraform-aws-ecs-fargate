@@ -38,7 +38,7 @@ data "template_file" "default" {
 }
 
 locals {
-  container_name = "nginx"
+  container_name = "example"
   container_port = "${module.alb.alb_target_group_port}"
 }
 
@@ -52,7 +52,7 @@ data "aws_iam_policy" "ecs_task_execution" {
 
 module "alb" {
   source                     = "git::https://github.com/tmknom/terraform-aws-alb.git?ref=tags/1.4.1"
-  name                       = "alb-ecs-fargate"
+  name                       = "ecs-fargate"
   vpc_id                     = "${module.vpc.vpc_id}"
   subnets                    = ["${module.vpc.public_subnet_ids}"]
   access_logs_bucket         = "${module.s3_lb_log.s3_bucket_id}"
@@ -77,7 +77,7 @@ module "s3_access_log" {
 module "vpc" {
   source                    = "git::https://github.com/tmknom/terraform-aws-vpc.git?ref=tags/1.0.0"
   cidr_block                = "${local.cidr_block}"
-  name                      = "vpc-ecs-fargate"
+  name                      = "ecs-fargate"
   public_subnet_cidr_blocks = ["${cidrsubnet(local.cidr_block, 8, 0)}", "${cidrsubnet(local.cidr_block, 8, 1)}"]
   public_availability_zones = ["${data.aws_availability_zones.available.names}"]
 }
