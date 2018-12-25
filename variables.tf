@@ -103,16 +103,16 @@ variable "requires_compatibilities" {
   description = "A set of launch types required by the task. The valid values are EC2 and FARGATE."
 }
 
-variable "ecs_task_execution_path" {
+variable "iam_path" {
   default     = "/"
   type        = "string"
-  description = "Path in which to create the ecs task execution role and the ecs task execution policy."
+  description = "Path in which to create the IAM Role and the IAM Policy."
 }
 
-variable "ecs_task_execution_description" {
+variable "iam_description" {
   default     = "Managed by Terraform"
   type        = "string"
-  description = "The description of the ecs task execution role and the ecs task execution policy."
+  description = "The description of the IAM Role and the IAM Policy."
 }
 
 variable "tags" {
