@@ -35,7 +35,7 @@ variable "vpc_id" {
 
 variable "container_definitions" {
   type        = "string"
-  description = "A list of valid container definitions provided as a single valid JSON document. "
+  description = "A list of valid container definitions provided as a single valid JSON document."
 }
 
 variable "ecs_task_execution_policy" {
