@@ -74,7 +74,7 @@ variable "assign_public_ip" {
 }
 
 variable "health_check_grace_period_seconds" {
-  default     = 0
+  default     = 60
   type        = "string"
   description = "Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200."
 }
