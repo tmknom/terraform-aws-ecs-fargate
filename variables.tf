@@ -39,6 +39,7 @@ variable "container_definitions" {
 }
 
 variable "ecs_task_execution_policy" {
+  default     = ""
   type        = "string"
   description = "The ecs task execution policy document. This is a JSON formatted string."
 }
