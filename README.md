@@ -22,16 +22,15 @@ This module provides recommended settings:
 
 ```hcl
 module "ecs_fargate" {
-  source                    = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.1.0"
-  name                      = "example"
-  container_name            = "nginx"
-  container_port            = "80"
-  cluster                   = "${var.ecs_cluster_arn}"
-  subnets                   = ["${var.subnets}"]
-  target_group_arn          = "${var.target_group_arn}"
-  vpc_id                    = "${var.vpc_id}"
-  container_definitions     = "${var.container_definitions}"
-  ecs_task_execution_policy = "${var.ecs_task_execution_policy}"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.1.0"
+  name                  = "example"
+  container_name        = "nginx"
+  container_port        = "80"
+  cluster               = "${var.ecs_cluster_arn}"
+  subnets               = ["${var.subnets}"]
+  target_group_arn      = "${var.target_group_arn}"
+  vpc_id                = "${var.vpc_id}"
+  container_definitions = "${var.container_definitions}"
 }
 ```
 
@@ -39,17 +38,17 @@ module "ecs_fargate" {
 
 ```hcl
 module "ecs_fargate" {
-  source                    = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.1.0"
-  name                      = "example"
-  container_name            = "nginx"
-  container_port            = "80"
-  cluster                   = "${var.ecs_cluster_arn}"
-  subnets                   = ["${var.subnets}"]
-  target_group_arn          = "${var.target_group_arn}"
-  vpc_id                    = "${var.vpc_id}"
-  container_definitions     = "${var.container_definitions}"
-  ecs_task_execution_policy = "${var.ecs_task_execution_policy}"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.1.0"
+  name                  = "example"
+  container_name        = "nginx"
+  container_port        = "80"
+  cluster               = "${var.ecs_cluster_arn}"
+  subnets               = ["${var.subnets}"]
+  target_group_arn      = "${var.target_group_arn}"
+  vpc_id                = "${var.vpc_id}"
+  container_definitions = "${var.container_definitions}"
 
+  ecs_task_execution_policy          = "${var.ecs_task_execution_policy}"
   desired_count                      = 2
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
@@ -82,7 +81,6 @@ module "ecs_fargate" {
 | container_definitions              | A list of valid container definitions provided as a single valid JSON document.                                                                                       | string |           -            |   yes    |
 | container_name                     | The name of the container to associate with the load balancer (as it appears in a container definition).                                                              | string |           -            |   yes    |
 | container_port                     | The port on the container to associate with the load balancer.                                                                                                        | string |           -            |   yes    |
-| ecs_task_execution_policy          | The ecs task execution policy document. This is a JSON formatted string.                                                                                              | string |           -            |   yes    |
 | name                               | The name of ecs service.                                                                                                                                              | string |           -            |   yes    |
 | subnets                            | The subnets associated with the task or service.                                                                                                                      |  list  |           -            |   yes    |
 | target_group_arn                   | The ARN of the Load Balancer target group to associate with the service.                                                                                              | string |           -            |   yes    |
@@ -93,6 +91,7 @@ module "ecs_fargate" {
 | deployment_maximum_percent         | The upper limit (as a percentage of the service's desiredCount) of the number of running tasks that can be running in a service during a deployment.                  | string |         `200`          |    no    |
 | deployment_minimum_healthy_percent | The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment. | string |         `100`          |    no    |
 | desired_count                      | The number of instances of the task definition to place and keep running.                                                                                             | string |          `0`           |    no    |
+| ecs_task_execution_policy          | The ecs task execution policy document. This is a JSON formatted string.                                                                                              | string |        `` | no         |
 | health_check_grace_period_seconds  | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200.                                          | string |          `60`          |    no    |
 | iam_description                    | The description of the IAM Role and the IAM Policy.                                                                                                                   | string | `Managed by Terraform` |    no    |
 | iam_path                           | Path in which to create the IAM Role and the IAM Policy.                                                                                                              | string |          `/`           |    no    |

@@ -206,7 +206,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 # https://www.terraform.io/docs/providers/aws/r/iam_policy.html
 resource "aws_iam_policy" "default" {
   name        = "${local.iam_name}"
-  policy      = "${var.ecs_task_execution_policy}"
+  policy      = "${local.ecs_task_execution_policy}"
   path        = "${var.iam_path}"
   description = "${var.iam_description}"
 }
@@ -218,5 +218,10 @@ resource "aws_iam_role_policy_attachment" "default" {
 }
 
 locals {
-  iam_name = "${var.name}-ecs-task-execution"
+  iam_name                  = "${var.name}-ecs-task-execution"
+  ecs_task_execution_policy = "${var.ecs_task_execution_policy == "" ? data.aws_iam_policy.ecs_task_execution.policy : var.ecs_task_execution_policy}"
+}
+
+data "aws_iam_policy" "ecs_task_execution" {
+  arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }

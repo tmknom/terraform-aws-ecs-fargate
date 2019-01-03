@@ -1,14 +1,13 @@
 module "ecs_fargate" {
-  source                    = "../../"
-  name                      = "example"
-  container_name            = "${local.container_name}"
-  container_port            = "${local.container_port}"
-  cluster                   = "${aws_ecs_cluster.example.arn}"
-  subnets                   = ["${module.vpc.public_subnet_ids}"]
-  target_group_arn          = "${module.alb.alb_target_group_arn}"
-  vpc_id                    = "${module.vpc.vpc_id}"
-  container_definitions     = "${data.template_file.default.rendered}"
-  ecs_task_execution_policy = "${data.aws_iam_policy.ecs_task_execution.policy}"
+  source                = "../../"
+  name                  = "example"
+  container_name        = "${local.container_name}"
+  container_port        = "${local.container_port}"
+  cluster               = "${aws_ecs_cluster.example.arn}"
+  subnets               = ["${module.vpc.public_subnet_ids}"]
+  target_group_arn      = "${module.alb.alb_target_group_arn}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  container_definitions = "${data.template_file.default.rendered}"
 }
 
 data "template_file" "default" {
@@ -27,10 +26,6 @@ locals {
 
 resource "aws_ecs_cluster" "example" {
   name = "default"
-}
-
-data "aws_iam_policy" "ecs_task_execution" {
-  arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 module "alb" {
