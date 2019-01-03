@@ -1,13 +1,13 @@
 module "ecs_fargate" {
-  source                    = "../../"
-  name                      = "example"
-  container_name            = "${local.container_name}"
-  container_port            = "${local.container_port}"
-  cluster                   = "${aws_ecs_cluster.example.arn}"
-  subnets                   = ["${module.vpc.public_subnet_ids}"]
-  target_group_arn          = "${module.alb.alb_target_group_arn}"
-  vpc_id                    = "${module.vpc.vpc_id}"
-  container_definitions     = "${data.template_file.default.rendered}"
+  source                = "../../"
+  name                  = "example"
+  container_name        = "${local.container_name}"
+  container_port        = "${local.container_port}"
+  cluster               = "${aws_ecs_cluster.example.arn}"
+  subnets               = ["${module.vpc.public_subnet_ids}"]
+  target_group_arn      = "${module.alb.alb_target_group_arn}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  container_definitions = "${data.template_file.default.rendered}"
 }
 
 data "template_file" "default" {
