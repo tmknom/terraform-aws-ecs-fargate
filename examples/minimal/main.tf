@@ -8,7 +8,6 @@ module "ecs_fargate" {
   target_group_arn          = "${module.alb.alb_target_group_arn}"
   vpc_id                    = "${module.vpc.vpc_id}"
   container_definitions     = "${data.template_file.default.rendered}"
-  ecs_task_execution_policy = "${data.aws_iam_policy.ecs_task_execution.policy}"
 }
 
 data "template_file" "default" {
@@ -27,10 +26,6 @@ locals {
 
 resource "aws_ecs_cluster" "example" {
   name = "default"
-}
-
-data "aws_iam_policy" "ecs_task_execution" {
-  arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 module "alb" {
