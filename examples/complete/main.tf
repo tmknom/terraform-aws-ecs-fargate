@@ -8,8 +8,8 @@ module "ecs_fargate" {
   target_group_arn          = "${module.alb.alb_target_group_arn}"
   vpc_id                    = "${module.vpc.vpc_id}"
   container_definitions     = "${data.template_file.default.rendered}"
-  ecs_task_execution_policy = "${data.aws_iam_policy.ecs_task_execution.policy}"
 
+  ecs_task_execution_policy = "${data.aws_iam_policy.ecs_task_execution.policy}"
   desired_count                      = 2
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
