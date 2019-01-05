@@ -22,6 +22,7 @@ module "ecs_fargate" {
   requires_compatibilities           = ["FARGATE"]
   iam_path                           = "/service_role/"
   iam_description                    = "example description"
+  enabled                            = true
 
   tags = {
     Environment = "prod"

@@ -61,6 +61,7 @@ module "ecs_fargate" {
   requires_compatibilities           = ["FARGATE"]
   iam_path                           = "/service_role/"
   iam_description                    = "example description"
+  enabled                            = true
 
   tags = {
     Environment = "prod"
@@ -92,6 +93,7 @@ module "ecs_fargate" {
 | deployment_minimum_healthy_percent | The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment. | string |         `100`          |    no    |
 | desired_count                      | The number of instances of the task definition to place and keep running.                                                                                             | string |          `0`           |    no    |
 | ecs_task_execution_policy          | The ecs task execution policy document. This is a JSON formatted string.                                                                                              | string |        `` | no         |
+| enabled                            | Set to false to prevent the module from creating anything.                                                                                                            | string |         `true`         |    no    |
 | health_check_grace_period_seconds  | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200.                                          | string |          `60`          |    no    |
 | iam_description                    | The description of the IAM Role and the IAM Policy.                                                                                                                   | string | `Managed by Terraform` |    no    |
 | iam_path                           | Path in which to create the IAM Role and the IAM Policy.                                                                                                              | string |          `/`           |    no    |

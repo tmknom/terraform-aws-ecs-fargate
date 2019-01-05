@@ -13,6 +13,8 @@
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_service.html
 resource "aws_ecs_service" "default" {
+  count = "${var.enabled}"
+
   # The name of your service. Up to 255 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.
   # Service names must be unique within a cluster, but you can have similarly named services
   # in multiple clusters within a region or across multiple regions.
@@ -106,6 +108,8 @@ resource "aws_ecs_service" "default" {
 #
 # https://www.terraform.io/docs/providers/aws/r/security_group.html
 resource "aws_security_group" "default" {
+  count = "${var.enabled}"
+
   name   = "${local.security_group_name}"
   vpc_id = "${var.vpc_id}"
   tags   = "${merge(map("Name", local.security_group_name), var.tags)}"
@@ -117,6 +121,8 @@ locals {
 
 # https://www.terraform.io/docs/providers/aws/r/security_group_rule.html
 resource "aws_security_group_rule" "ingress" {
+  count = "${var.enabled}"
+
   type              = "ingress"
   from_port         = "${var.container_port}"
   to_port           = "${var.container_port}"
@@ -126,6 +132,8 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "egress" {
+  count = "${var.enabled}"
+
   type              = "egress"
   from_port         = 0
   to_port           = 0
@@ -145,6 +153,8 @@ resource "aws_security_group_rule" "egress" {
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_task_definition.html
 resource "aws_ecs_task_definition" "default" {
+  count = "${var.enabled}"
+
   # A unique name for your task definition.
   family = "${var.name}"
 
@@ -185,6 +195,8 @@ resource "aws_ecs_task_definition" "default" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_role.html
 resource "aws_iam_role" "default" {
+  count = "${var.enabled}"
+
   name               = "${local.iam_name}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy.json}"
   path               = "${var.iam_path}"
@@ -205,6 +217,8 @@ data "aws_iam_policy_document" "assume_role_policy" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_policy.html
 resource "aws_iam_policy" "default" {
+  count = "${var.enabled}"
+
   name        = "${local.iam_name}"
   policy      = "${local.ecs_task_execution_policy}"
   path        = "${var.iam_path}"
@@ -213,6 +227,8 @@ resource "aws_iam_policy" "default" {
 
 # https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
 resource "aws_iam_role_policy_attachment" "default" {
+  count = "${var.enabled}"
+
   role       = "${aws_iam_role.default.name}"
   policy_arn = "${aws_iam_policy.default.arn}"
 }
