@@ -121,3 +121,9 @@ variable "tags" {
   type        = "map"
   description = "A mapping of tags to assign to all resources."
 }
+
+variable "enabled" {
+  default     = true
+  type        = "string"
+  description = "Set to false to prevent the module from creating anything."
+}
