@@ -22,7 +22,7 @@ This module provides recommended settings:
 
 ```hcl
 module "ecs_fargate" {
-  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.2.0"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.3.0"
   name                  = "example"
   container_name        = "nginx"
   container_port        = "80"
@@ -38,7 +38,7 @@ module "ecs_fargate" {
 
 ```hcl
 module "ecs_fargate" {
-  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.2.0"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.3.0"
   name                  = "example"
   container_name        = "nginx"
   container_port        = "80"
