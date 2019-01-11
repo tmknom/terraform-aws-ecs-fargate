@@ -127,3 +127,15 @@ variable "enabled" {
   type        = "string"
   description = "Set to false to prevent the module from creating anything."
 }
+
+variable "create_ecs_task_execution_role" {
+  default     = true
+  type        = "string"
+  description = "Specify true to indicate that ECS Task Execution IAM Role creation."
+}
+
+variable "ecs_task_execution_role_arn" {
+  default     = ""
+  type        = "string"
+  description = "The ARN of the ECS Task Execution IAM Role."
+}
