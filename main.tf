@@ -234,7 +234,7 @@ resource "aws_iam_role_policy_attachment" "default" {
 }
 
 locals {
-  iam_name                  = "${var.name}-ecs-task-execution"
+  iam_name                   = "${var.name}-ecs-task-execution"
   enabled_ecs_task_execution = "${var.enabled && var.create_ecs_task_execution_role ? 1 : 0}"
 }
 
