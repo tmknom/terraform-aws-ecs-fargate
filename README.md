@@ -48,7 +48,6 @@ module "ecs_fargate" {
   vpc_id                = "${var.vpc_id}"
   container_definitions = "${var.container_definitions}"
 
-  ecs_task_execution_policy          = "${var.ecs_task_execution_policy}"
   desired_count                      = 2
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
@@ -96,7 +95,6 @@ module "ecs_fargate" {
 | deployment_maximum_percent         | The upper limit (as a percentage of the service's desiredCount) of the number of running tasks that can be running in a service during a deployment.                  | string |         `200`          |    no    |
 | deployment_minimum_healthy_percent | The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment. | string |         `100`          |    no    |
 | desired_count                      | The number of instances of the task definition to place and keep running.                                                                                             | string |          `0`           |    no    |
-| ecs_task_execution_policy          | The ecs task execution policy document. This is a JSON formatted string.                                                                                              | string |        `` | no         |
 | ecs_task_execution_role_arn        | The ARN of the ECS Task Execution IAM Role.                                                                                                                           | string |        `` | no         |
 | enabled                            | Set to false to prevent the module from creating anything.                                                                                                            | string |         `true`         |    no    |
 | health_check_grace_period_seconds  | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200.                                          | string |          `60`          |    no    |
