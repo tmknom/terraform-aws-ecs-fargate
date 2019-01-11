@@ -38,12 +38,6 @@ variable "container_definitions" {
   description = "A list of valid container definitions provided as a single valid JSON document."
 }
 
-variable "ecs_task_execution_policy" {
-  default     = ""
-  type        = "string"
-  description = "The ecs task execution policy document. This is a JSON formatted string."
-}
-
 variable "desired_count" {
   default     = 0
   type        = "string"
