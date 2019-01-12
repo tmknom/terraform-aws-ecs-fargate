@@ -74,6 +74,12 @@ variable "health_check_grace_period_seconds" {
   description = "Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200."
 }
 
+variable "platform_version" {
+  default     = "1.4.0"
+  type        = "string"
+  description = "The platform version on which to run your service."
+}
+
 variable "ingress_cidr_blocks" {
   default     = ["0.0.0.0/0"]
   type        = "list"

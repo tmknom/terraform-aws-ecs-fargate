@@ -82,6 +82,12 @@ resource "aws_ecs_service" "default" {
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-create-loadbalancer-rolling.html
   health_check_grace_period_seconds = "${var.health_check_grace_period_seconds}"
 
+  # You can use either the version number (for example, 1.4.0) or LATEST.
+  # If you specify LATEST, your tasks use the most current platform version available,
+  # which may not be the most recent platform version.
+  # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform_versions.html
+  platform_version = "${var.platform_version}"
+
   # The launch type on which to run your service.
   # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_types.html
   launch_type = "FARGATE"
