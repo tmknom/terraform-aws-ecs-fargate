@@ -144,11 +144,6 @@ resource "aws_security_group_rule" "egress" {
 
 # ECS Task Definitions
 #
-# The following parameters are not valid in Fargate:
-# - ipc_mode
-# - pid_mode
-# - placement_constraints
-#
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_task_definition.html
