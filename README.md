@@ -60,7 +60,7 @@ module "ecs_fargate" {
   memory                             = 512
   requires_compatibilities           = ["FARGATE"]
   iam_path                           = "/service_role/"
-  iam_description                    = "example description"
+  description                        = "This is example"
   enabled                            = true
 
   create_ecs_task_execution_role = false
@@ -95,11 +95,11 @@ module "ecs_fargate" {
 | deployment_controller_type         | Type of deployment controller. Valid values: CODE_DEPLOY, ECS.                                                                                                        | string |         `ECS`          |    no    |
 | deployment_maximum_percent         | The upper limit (as a percentage of the service's desiredCount) of the number of running tasks that can be running in a service during a deployment.                  | string |         `200`          |    no    |
 | deployment_minimum_healthy_percent | The lower limit (as a percentage of the service's desiredCount) of the number of running tasks that must remain running and healthy in a service during a deployment. | string |         `100`          |    no    |
+| description                        | The description of the all resources.                                                                                                                                 | string | `Managed by Terraform` |    no    |
 | desired_count                      | The number of instances of the task definition to place and keep running.                                                                                             | string |          `0`           |    no    |
 | ecs_task_execution_role_arn        | The ARN of the ECS Task Execution IAM Role.                                                                                                                           | string |        `` | no         |
 | enabled                            | Set to false to prevent the module from creating anything.                                                                                                            | string |         `true`         |    no    |
 | health_check_grace_period_seconds  | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200.                                          | string |          `60`          |    no    |
-| iam_description                    | The description of the IAM Role and the IAM Policy.                                                                                                                   | string | `Managed by Terraform` |    no    |
 | iam_path                           | Path in which to create the IAM Role and the IAM Policy.                                                                                                              | string |          `/`           |    no    |
 | ingress_cidr_blocks                | List of Ingress CIDR blocks.                                                                                                                                          |  list  |   `[ "0.0.0.0/0" ]`    |    no    |
 | memory                             | The amount (in MiB) of memory used by the task.                                                                                                                       | string |         `512`          |    no    |

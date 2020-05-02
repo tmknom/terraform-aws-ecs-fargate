@@ -21,7 +21,7 @@ module "ecs_fargate" {
   memory                             = 512
   requires_compatibilities           = ["FARGATE"]
   iam_path                           = "/service_role/"
-  iam_description                    = "example description"
+  description                        = "This is example"
   enabled                            = true
 
   create_ecs_task_execution_role = false
