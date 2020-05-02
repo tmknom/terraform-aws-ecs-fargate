@@ -54,6 +54,7 @@ module "ecs_fargate" {
   deployment_controller_type         = "ECS"
   assign_public_ip                   = true
   health_check_grace_period_seconds  = 10
+  platform_version                   = "1.4.0"
   ingress_cidr_blocks                = ["0.0.0.0/0"]
   cpu                                = 256
   memory                             = 512
@@ -102,6 +103,7 @@ module "ecs_fargate" {
 | iam_path                           | Path in which to create the IAM Role and the IAM Policy.                                                                                                              | string |          `/`           |    no    |
 | ingress_cidr_blocks                | List of Ingress CIDR blocks.                                                                                                                                          |  list  |   `[ "0.0.0.0/0" ]`    |    no    |
 | memory                             | The amount (in MiB) of memory used by the task.                                                                                                                       | string |         `512`          |    no    |
+| platform_version                   | The platform version on which to run your service.                                                                                                                    | string |        `LATEST`        |    no    |
 | requires_compatibilities           | A set of launch types required by the task. The valid values are EC2 and FARGATE.                                                                                     |  list  |    `[ "FARGATE" ]`     |    no    |
 | tags                               | A mapping of tags to assign to all resources.                                                                                                                         |  map   |          `{}`          |    no    |
 
