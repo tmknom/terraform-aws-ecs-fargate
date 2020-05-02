@@ -1,13 +1,26 @@
 module "ecs_fargate" {
-  source                = "../../"
-  name                  = "example"
-  container_name        = local.container_name
-  container_port        = local.container_port
-  cluster               = aws_ecs_cluster.example.arn
-  subnets               = module.vpc.public_subnet_ids
-  target_group_arn      = module.alb.alb_target_group_arn
-  vpc_id                = module.vpc.vpc_id
-  container_definitions = data.template_file.default.rendered
+  source           = "../../"
+  name             = "example"
+  container_name   = local.container_name
+  container_port   = local.container_port
+  cluster          = aws_ecs_cluster.example.arn
+  subnets          = module.vpc.public_subnet_ids
+  target_group_arn = module.alb.alb_target_group_arn
+  vpc_id           = module.vpc.vpc_id
+
+  container_definitions = jsonencode([
+    {
+      name      = local.container_name
+      image     = "nginx:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = local.container_port
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
 
   desired_count                      = 2
   deployment_maximum_percent         = 200
@@ -62,18 +75,9 @@ data "aws_iam_policy" "ecs_task_execution" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-data "template_file" "default" {
-  template = file("${path.module}/container_definitions.json")
-
-  vars = {
-    container_name = local.container_name
-    container_port = local.container_port
-  }
-}
-
 locals {
   container_name = "example"
-  container_port = module.alb.alb_target_group_port
+  container_port = tonumber(module.alb.alb_target_group_port)
 }
 
 resource "aws_ecs_cluster" "example" {
