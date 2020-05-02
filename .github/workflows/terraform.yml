@@ -1,0 +1,66 @@
+name: Terraform
+on:
+  pull_request:
+
+env:
+  TERRAFORM_VERSION: 0.12.24
+  AWS_DEFAULT_REGION: us-east-1
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.1.0
+      - name: Format all
+        uses: hashicorp/terraform-github-actions@v0.8.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tf_actions_version: ${{ env.TERRAFORM_VERSION }}
+          tf_actions_comment: true
+          tf_actions_subcommand: fmt
+
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        dir:
+          - .
+          - examples/minimal
+          - examples/complete
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.1.0
+      - name: Init
+        uses: hashicorp/terraform-github-actions@v0.8.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tf_actions_version: ${{ env.TERRAFORM_VERSION }}
+          tf_actions_working_dir: ${{ matrix.dir }}
+          tf_actions_comment: true
+          tf_actions_subcommand: init
+      - name: Validate
+        uses: hashicorp/terraform-github-actions@v0.8.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tf_actions_version: ${{ env.TERRAFORM_VERSION }}
+          tf_actions_working_dir: ${{ matrix.dir }}
+          tf_actions_comment: true
+          tf_actions_subcommand: validate
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.1.0
+      - name: TFLint
+        run: docker run --rm -v ${PWD}:/data wata727/tflint
