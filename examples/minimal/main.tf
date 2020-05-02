@@ -25,7 +25,7 @@ module "ecs_fargate" {
 
 locals {
   container_name = "example"
-  container_port = module.alb.alb_target_group_port
+  container_port = tonumber(module.alb.alb_target_group_port)
 }
 
 resource "aws_ecs_cluster" "example" {
