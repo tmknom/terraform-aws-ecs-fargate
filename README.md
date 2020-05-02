@@ -22,15 +22,15 @@ This module provides recommended settings:
 
 ```hcl
 module "ecs_fargate" {
-  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.4.0"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/2.0.0"
   name                  = "example"
   container_name        = "nginx"
   container_port        = "80"
-  cluster               = "${var.ecs_cluster_arn}"
-  subnets               = ["${var.subnets}"]
-  target_group_arn      = "${var.target_group_arn}"
-  vpc_id                = "${var.vpc_id}"
-  container_definitions = "${var.container_definitions}"
+  cluster               = var.ecs_cluster_arn
+  subnets               = var.subnets
+  target_group_arn      = var.target_group_arn
+  vpc_id                = var.vpc_id
+  container_definitions = var.container_definitions
 }
 ```
 
@@ -38,15 +38,15 @@ module "ecs_fargate" {
 
 ```hcl
 module "ecs_fargate" {
-  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/1.4.0"
+  source                = "git::https://github.com/tmknom/terraform-aws-ecs-fargate.git?ref=tags/2.0.0"
   name                  = "example"
   container_name        = "nginx"
   container_port        = "80"
-  cluster               = "${var.ecs_cluster_arn}"
-  subnets               = ["${var.subnets}"]
-  target_group_arn      = "${var.target_group_arn}"
-  vpc_id                = "${var.vpc_id}"
-  container_definitions = "${var.container_definitions}"
+  cluster               = var.ecs_cluster_arn
+  subnets               = var.subnets
+  target_group_arn      = var.target_group_arn
+  vpc_id                = var.vpc_id
+  container_definitions = var.container_definitions
 
   desired_count                      = 2
   deployment_maximum_percent         = 200
@@ -64,7 +64,7 @@ module "ecs_fargate" {
   enabled                            = true
 
   create_ecs_task_execution_role = false
-  ecs_task_execution_role_arn    = "${var.ecs_task_execution_role_arn}"
+  ecs_task_execution_role_arn    = var.ecs_task_execution_role_arn
 
   tags = {
     Environment = "prod"
