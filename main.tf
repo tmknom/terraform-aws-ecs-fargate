@@ -13,7 +13,7 @@
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_service.html
 resource "aws_ecs_service" "default" {
-  count = var.enabled
+  count = var.enabled ? 1 : 0
 
   # The name of your service. Up to 255 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.
   # Service names must be unique within a cluster, but you can have similarly named services
@@ -114,7 +114,7 @@ resource "aws_ecs_service" "default" {
 #
 # https://www.terraform.io/docs/providers/aws/r/security_group.html
 resource "aws_security_group" "default" {
-  count = var.enabled
+  count = var.enabled ? 1 : 0
 
   name   = local.security_group_name
   vpc_id = var.vpc_id
@@ -127,7 +127,7 @@ locals {
 
 # https://www.terraform.io/docs/providers/aws/r/security_group_rule.html
 resource "aws_security_group_rule" "ingress" {
-  count = var.enabled
+  count = var.enabled ? 1 : 0
 
   type              = "ingress"
   from_port         = var.container_port
@@ -138,7 +138,7 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  count = var.enabled
+  count = var.enabled ? 1 : 0
 
   type              = "egress"
   from_port         = 0
@@ -154,7 +154,7 @@ resource "aws_security_group_rule" "egress" {
 
 # https://www.terraform.io/docs/providers/aws/r/ecs_task_definition.html
 resource "aws_ecs_task_definition" "default" {
-  count = var.enabled
+  count = var.enabled ? 1 : 0
 
   # A unique name for your task definition.
   family = var.name
@@ -236,7 +236,7 @@ resource "aws_iam_role_policy_attachment" "default" {
 
 locals {
   iam_name                   = "${var.name}-ecs-task-execution"
-  enabled_ecs_task_execution = var.enabled && var.create_ecs_task_execution_role ? 1 : 0
+  enabled_ecs_task_execution = var.enabled ? 1 : 0 && var.create_ecs_task_execution_role ? 1 : 0
 }
 
 data "aws_iam_policy" "ecs_task_execution" {
