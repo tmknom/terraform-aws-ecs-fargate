@@ -1,22 +1,26 @@
 module "ecs_fargate" {
-  source                = "../../"
-  name                  = "example"
-  container_name        = local.container_name
-  container_port        = local.container_port
-  cluster               = aws_ecs_cluster.example.arn
-  subnets               = module.vpc.public_subnet_ids
-  target_group_arn      = module.alb.alb_target_group_arn
-  vpc_id                = module.vpc.vpc_id
-  container_definitions = data.template_file.default.rendered
-}
+  source           = "../../"
+  name             = "example"
+  container_name   = local.container_name
+  container_port   = local.container_port
+  cluster          = aws_ecs_cluster.example.arn
+  subnets          = module.vpc.public_subnet_ids
+  target_group_arn = module.alb.alb_target_group_arn
+  vpc_id           = module.vpc.vpc_id
 
-data "template_file" "default" {
-  template = file("${path.module}/container_definitions.json")
-
-  vars = {
-    container_name = local.container_name
-    container_port = local.container_port
-  }
+  container_definitions = jsonencode([
+    {
+      name      = local.container_name
+      image     = "nginx:latest"
+      essential = true
+      portMappings = [
+        {
+          containerPort = local.container_port
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
 }
 
 locals {
