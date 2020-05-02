@@ -141,7 +141,7 @@ module "ecs_fargate" {
 
 ## Development
 
-### Requirements
+### Development Requirements
 
 - [Docker](https://www.docker.com/)
 
