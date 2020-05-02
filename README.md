@@ -164,21 +164,21 @@ make install
 ### Makefile targets
 
 ```text
+apply-complete                 Run terraform apply examples/complete
+apply-minimal                  Run terraform apply examples/minimal
 check-format                   Check format code
-cibuild                        Execute CI build
 clean                          Clean .terraform
+destroy-complete               Run terraform destroy examples/complete
+destroy-minimal                Run terraform destroy examples/minimal
+diff                           Word diff
 docs                           Generate docs
 format                         Format code
 help                           Show help
 install                        Install requirements
 lint                           Lint code
+plan-complete                  Run terraform plan examples/complete
+plan-minimal                   Run terraform plan examples/minimal
 release                        Release GitHub and Terraform Module Registry
-terraform-apply-complete       Run terraform apply examples/complete
-terraform-apply-minimal        Run terraform apply examples/minimal
-terraform-destroy-complete     Run terraform destroy examples/complete
-terraform-destroy-minimal      Run terraform destroy examples/minimal
-terraform-plan-complete        Run terraform plan examples/complete
-terraform-plan-minimal         Run terraform plan examples/minimal
 upgrade                        Upgrade makefile
 ```
 
