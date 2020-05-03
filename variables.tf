@@ -80,10 +80,10 @@ variable "platform_version" {
   description = "The platform version on which to run your service."
 }
 
-variable "ingress_cidr_blocks" {
+variable "source_cidr_blocks" {
   default     = ["0.0.0.0/0"]
   type        = list(string)
-  description = "List of Ingress CIDR blocks."
+  description = "List of source CIDR blocks."
 }
 
 variable "cpu" {
