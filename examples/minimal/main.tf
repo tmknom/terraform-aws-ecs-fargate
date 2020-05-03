@@ -33,7 +33,7 @@ resource "aws_ecs_cluster" "example" {
 }
 
 module "alb" {
-  source                     = "git::https://github.com/tmknom/terraform-aws-alb.git?ref=tags/2.0.0"
+  source                     = "git::https://github.com/tmknom/terraform-aws-alb.git?ref=tags/2.1.0"
   name                       = "ecs-fargate"
   vpc_id                     = module.vpc.vpc_id
   subnets                    = module.vpc.public_subnet_ids
