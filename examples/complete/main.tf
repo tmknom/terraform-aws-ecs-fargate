@@ -29,7 +29,7 @@ module "ecs_fargate" {
   assign_public_ip                   = true
   health_check_grace_period_seconds  = 10
   platform_version                   = "LATEST"
-  ingress_cidr_blocks                = ["0.0.0.0/0"]
+  source_cidr_blocks                 = ["0.0.0.0/0"]
   cpu                                = 256
   memory                             = 512
   requires_compatibilities           = ["FARGATE"]

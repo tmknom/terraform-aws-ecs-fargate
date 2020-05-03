@@ -58,7 +58,7 @@ module "ecs_fargate" {
   assign_public_ip                   = true
   health_check_grace_period_seconds  = 10
   platform_version                   = "1.4.0"
-  ingress_cidr_blocks                = ["0.0.0.0/0"]
+  source_cidr_blocks                 = ["0.0.0.0/0"]
   cpu                                = 256
   memory                             = 512
   requires_compatibilities           = ["FARGATE"]
@@ -118,10 +118,10 @@ module "ecs_fargate" {
 | enabled                            | Set to false to prevent the module from creating anything.                                                                                                            | `string`       | `true`                            |    no    |
 | health_check_grace_period_seconds  | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200.                                          | `string`       | `60`                              |    no    |
 | iam_path                           | Path in which to create the IAM Role and the IAM Policy.                                                                                                              | `string`       | `"/"`                             |    no    |
-| ingress_cidr_blocks                | List of Ingress CIDR blocks.                                                                                                                                          | `list(string)` | <pre>[<br> "0.0.0.0/0"<br>]</pre> |    no    |
 | memory                             | The amount (in MiB) of memory used by the task.                                                                                                                       | `string`       | `"512"`                           |    no    |
 | platform_version                   | The platform version on which to run your service.                                                                                                                    | `string`       | `"1.4.0"`                         |    no    |
 | requires_compatibilities           | A set of launch types required by the task. The valid values are EC2 and FARGATE.                                                                                     | `list(string)` | <pre>[<br> "FARGATE"<br>]</pre>   |    no    |
+| source_cidr_blocks                 | List of source CIDR blocks.                                                                                                                                           | `list(string)` | <pre>[<br> "0.0.0.0/0"<br>]</pre> |    no    |
 | tags                               | A mapping of tags to assign to all resources.                                                                                                                         | `map(string)`  | `{}`                              |    no    |
 
 ## Outputs
