@@ -104,6 +104,7 @@ resource "aws_ecs_service" "default" {
     # https://www.terraform.io/docs/providers/aws/r/ecs_service.html#ignoring-changes-to-desired-count
     ignore_changes = [desired_count]
   }
+  tags = var.tags
 }
 
 # Security Group for ECS Service
